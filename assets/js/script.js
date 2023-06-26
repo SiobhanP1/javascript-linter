@@ -5,6 +5,16 @@ const resultsModal = new bootstrap.Modal(document.getElementById("resultsModal")
 document.getElementById("status").addEventListener("click", e=>getStatus(e));
 document.getElementById("submit").addEventListener("click", e=>postForm(e));
 
+function displayException(data) {
+    exception_info = `<p>Error Number: ${error.error_no}</p>`;
+    exception_info += `<p>Status Code: ${status_code}</p>`;
+    exception_info += `<p>Error: ${error.error}</p>`;
+
+    document.getElementById("resultsModalTitle").innerText = "An Exception Occurred";
+    document.getElementById("results-content").innerHTML = exception_info;
+    resultsModal.show();
+}
+
 function processOptions(form) {
      
     let optionArray = [];
@@ -39,6 +49,7 @@ async function postForm(e) {
     if (response.ok) {
         displayErrors(data);
     } else {
+        displayException(data);
         throw new Error(data.error);
     }
 }
